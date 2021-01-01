@@ -34,6 +34,12 @@ public class DemoComponentSource implements ComponentSource {
         manager.addComponent("my folder/RAM", MultiPortRAM.DESCRIPTION,
                 (attr, inputs, outputs) ->
                         new GenericShape("RAM", inputs, outputs, attr.getLabel(), true, 5));
+        
+
+        // add a component and use the default shape
+        manager.addComponent("my folder/RAM", RectLedMatrix.DESCRIPTION);
+        // add a component and use the default shape
+        manager.addComponent("my folder/RAM", RGBVideo.DESCRIPTION);
     }
 
     /**
