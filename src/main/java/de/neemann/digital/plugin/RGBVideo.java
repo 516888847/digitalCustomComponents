@@ -28,21 +28,28 @@ public class RGBVideo extends Node implements Element {
 
     public static final ElementTypeDescription DESCRIPTION
             = new ElementTypeDescription(RGBVideo.class,
-            input("XCoord"),
-            input("YCoord"),
-            input("Write"),
-            input("Clock").setClock())
+            input("X"),
+            input("Y"),
+            input("W"),
+            input("RGB"),
+            input("C").setClock())
             .addAttribute(Keys.ROTATE)
-            .addAttribute(Keys.LABEL);
+            .addAttribute(Keys.LABEL)
+            .addAttribute(Keys.GRAPHIC_WIDTH)
+            .addAttribute(Keys.GRAPHIC_HEIGHT)
+            ;
 
-    private ObservableValue XCoord;
-    private ObservableValue YCoord;
-    private ObservableValue WriteEnable;
-    private ObservableValue clock;
+    private ObservableValue InputXCoord;
+    private ObservableValue InputYCoord;
+    private ObservableValue InputWriteEnable;
+    private ObservableValue InputRGB;
+    private ObservableValue InputClock;
     private boolean lastClock;
     private BufferedImage image;
     private RGBVideoDialog graphicDialog;
     private String label;
+    private int SizeW;
+    private int SizeH;
 
     /**
      * Creates a new instance
@@ -50,16 +57,20 @@ public class RGBVideo extends Node implements Element {
      * @param attr the attributes
      */
     public RGBVideo(ElementAttributes attr) {
+        SizeH = Math.min(attr.get(Keys.GRAPHIC_WIDTH),4096);
+        SizeW = Math.min(attr.get(Keys.GRAPHIC_HEIGHT),4096);
         label = attr.getLabel();
-        image = new BufferedImage(256, 256, BufferedImage.TYPE_BYTE_BINARY);
+        image = new BufferedImage(SizeW, SizeH, BufferedImage.TYPE_INT_RGB);
     }
 
     @Override
     public void setInputs(ObservableValues inputs) throws NodeException {
-        XCoord = inputs.get(0).checkBits(8, this, 0).addObserverToValue(this);
-        YCoord = inputs.get(1).checkBits(8, this, 1).addObserverToValue(this);
-        WriteEnable = inputs.get(2).checkBits(1, this ,2).addObserverToValue(this);
-        clock = inputs.get(3).checkBits(1, this, 3).addObserverToValue(this);
+        InputXCoord = inputs.get(0);
+        InputYCoord = inputs.get(1);
+        InputWriteEnable = inputs.get(2).checkBits(1, this ,2).addObserverToValue(this);
+        InputRGB = inputs.get(3).checkBits(24,this,3).addObserverToValue(this);
+        InputClock = inputs.get(4).checkBits(1, this, 4).addObserverToValue(this);
+
     }
 
     @Override
@@ -69,17 +80,18 @@ public class RGBVideo extends Node implements Element {
 
     @Override
     public void readInputs() throws NodeException {
-        boolean actClock = clock.getBool();
-        if (actClock && !lastClock) {
+        boolean actClock = InputClock.getBool();
+        boolean actWriteEnable = InputWriteEnable.getBool();
+        if (actClock && !lastClock && actWriteEnable) {
             setPixel();
         }
         lastClock = actClock;
     }
 
     private void setPixel() {
-        int xpos = (int)XCoord.getValue();
-        int ypos = (int)YCoord.getValue();
-        int RGBC = Color.WHITE.getRGB();
+        int xpos = Math.min((int)InputXCoord.getValue(),SizeW-1);
+        int ypos = Math.min((int)InputYCoord.getValue(),SizeH-1);
+        int RGBC = (int)InputRGB.getValue();
         image.setRGB(xpos, ypos, RGBC);
         updateGraphic();
     }
@@ -99,8 +111,8 @@ public class RGBVideo extends Node implements Element {
         if (paintPending.compareAndSet(false, true)) {
             SwingUtilities.invokeLater(() -> {
                 if (graphicDialog == null || !graphicDialog.isVisible()) {
-                    graphicDialog = new RGBVideoDialog(getModel().getWindowPosManager().getMainFrame(), "VVFF", image);
-                    getModel().getWindowPosManager().register("VGA_" + label, graphicDialog);
+                    graphicDialog = new RGBVideoDialog(getModel().getWindowPosManager().getMainFrame(), "RGBVideo", image);
+                    getModel().getWindowPosManager().register("RGBVideo_" + label, graphicDialog);
                 }
                 paintPending.set(false);
                 graphicDialog.updateGraphic();

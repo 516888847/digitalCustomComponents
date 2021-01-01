@@ -28,7 +28,7 @@ public class RectLedMatrixDialog extends JDialog {
      * @param ledPersist if true the LEDs light up indefinite
      */
     public RectLedMatrixDialog(JFrame parent, int dy, long[] data, Color color, boolean ledPersist) {
-        super(parent, Lang.get("elem_LedMatrix"), false);
+        super(parent, "RectLedMatrix", false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         RectledMatrixComponent = new RectLedMatrixComponent(dy, data, color, ledPersist);
