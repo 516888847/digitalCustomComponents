@@ -24,9 +24,12 @@ public class RGBVideoDialog extends JDialog {
      * @param title  the window title
      * @param image  the image data
      */
+    private Dimension iSize;
     public RGBVideoDialog(Window parent, String title, BufferedImage image, int SizeScale) {
         super(parent, title, ModalityType.MODELESS);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        iSize = new Dimension(image.getWidth()*SizeScale,image.getHeight()*SizeScale);
 
         graphicComponent = new MyComponent(image,SizeScale);
         getContentPane().add(graphicComponent);
@@ -42,6 +45,7 @@ public class RGBVideoDialog extends JDialog {
      * Updates the graphics data
      */
     public void updateGraphic() {
+        setSize(iSize);
         graphicComponent.repaint();
     }
 
@@ -49,19 +53,17 @@ public class RGBVideoDialog extends JDialog {
         private final BufferedImage image;
         private int iWidth;
         private int iHeight;
-        private int iSizeScale;
         private MyComponent(BufferedImage image , int SizeScale) {
             super();
             this.image = image;
-            iWidth = image.getWidth();
-            iHeight = image.getHeight();
-            iSizeScale = SizeScale;
+            iWidth = image.getWidth() * SizeScale;
+            iHeight = image.getHeight() * SizeScale;
             setPreferredSize(new Dimension( iWidth, iHeight));
         }
 
         @Override
         protected void paintComponent(Graphics g) {
-            g.drawImage(image, 0, 0,iWidth * iSizeScale,iHeight * iSizeScale, null);
+            g.drawImage(image, 0, 0,iWidth,iHeight, null);
 
         }
     }
