@@ -35,7 +35,9 @@ public class RGBVideo extends Node implements Element {
             input("Y"),
             input("W"),
             input("RGB"),
-            input("C").setClock())
+            input("C").setClock(),
+            input("Clr")
+            )
             .addAttribute(Keys.ROTATE)
             .addAttribute(Keys.LABEL)
             .addAttribute(Keys.GRAPHIC_WIDTH)
@@ -48,6 +50,7 @@ public class RGBVideo extends Node implements Element {
     private ObservableValue InputWriteEnable;
     private ObservableValue InputRGB;
     private ObservableValue InputClock;
+    private ObservableValue InputClear;
     private boolean lastClock;
     private BufferedImage image;
     private RGBVideoDialog graphicDialog;
@@ -76,7 +79,7 @@ public class RGBVideo extends Node implements Element {
         InputWriteEnable = inputs.get(2).checkBits(1, this ,2).addObserverToValue(this);
         InputRGB = inputs.get(3).checkBits(24,this,3).addObserverToValue(this);
         InputClock = inputs.get(4).checkBits(1, this, 4).addObserverToValue(this);
-
+        InputClear = inputs.get(5).checkBits(1, this, 5).addObserverToValue(this);
     }
 
     @Override
@@ -88,8 +91,13 @@ public class RGBVideo extends Node implements Element {
     public void readInputs() throws NodeException {
         boolean actClock = InputClock.getBool();
         boolean actWriteEnable = InputWriteEnable.getBool();
+        boolean actClear = InputClear.getBool();
         if (actClock && !lastClock && actWriteEnable) {
-            setPixel();
+            if(!actClear){
+                setPixel();
+            }else{
+                ClearImage();
+            }
         }
         lastClock = actClock;
     }
@@ -101,7 +109,14 @@ public class RGBVideo extends Node implements Element {
         image.setRGB(xpos, ypos, RGBC);
         updateGraphic();
     }
-
+    private void ClearImage() {
+        Graphics2D g = image.createGraphics();
+        g.setBackground(new Color(0, 0, 0, 0));
+        g.clearRect(0, 0, image.getWidth(),
+                image.getHeight());
+        g.dispose();
+        updateGraphic();
+    }
 
     @Override
     public void writeOutputs() throws NodeException {
