@@ -9,6 +9,7 @@ import de.neemann.digital.core.*;
 import de.neemann.digital.core.element.Element;
 import de.neemann.digital.core.element.ElementAttributes;
 import de.neemann.digital.core.element.ElementTypeDescription;
+import de.neemann.digital.core.element.Key;
 import de.neemann.digital.core.element.Keys;
 import de.neemann.digital.lang.Lang;
 
@@ -26,6 +27,8 @@ import static de.neemann.digital.core.element.PinInfo.input;
  */
 public class RGBVideo extends Node implements Element {
 
+    private static final Key.KeyInteger KEY_SIZESCALE = new Key.KeyInteger("GraphicScale", 1).setMin(1).setMax(32);
+    
     public static final ElementTypeDescription DESCRIPTION
             = new ElementTypeDescription(RGBVideo.class,
             input("X"),
@@ -37,6 +40,7 @@ public class RGBVideo extends Node implements Element {
             .addAttribute(Keys.LABEL)
             .addAttribute(Keys.GRAPHIC_WIDTH)
             .addAttribute(Keys.GRAPHIC_HEIGHT)
+            .addAttribute(KEY_SIZESCALE)
             ;
 
     private ObservableValue InputXCoord;
@@ -50,6 +54,7 @@ public class RGBVideo extends Node implements Element {
     private String label;
     private int SizeW;
     private int SizeH;
+    private int SizeScale;
 
     /**
      * Creates a new instance
@@ -59,6 +64,7 @@ public class RGBVideo extends Node implements Element {
     public RGBVideo(ElementAttributes attr) {
         SizeH = Math.min(attr.get(Keys.GRAPHIC_WIDTH),4096);
         SizeW = Math.min(attr.get(Keys.GRAPHIC_HEIGHT),4096);
+        SizeScale = Math.max(1,Math.min(attr.get(KEY_SIZESCALE),32));
         label = attr.getLabel();
         image = new BufferedImage(SizeW, SizeH, BufferedImage.TYPE_INT_RGB);
     }
@@ -111,7 +117,7 @@ public class RGBVideo extends Node implements Element {
         if (paintPending.compareAndSet(false, true)) {
             SwingUtilities.invokeLater(() -> {
                 if (graphicDialog == null || !graphicDialog.isVisible()) {
-                    graphicDialog = new RGBVideoDialog(getModel().getWindowPosManager().getMainFrame(), "RGBVideo", image);
+                    graphicDialog = new RGBVideoDialog(getModel().getWindowPosManager().getMainFrame(), "RGBVideo", image, SizeScale);
                     getModel().getWindowPosManager().register("RGBVideo_" + label, graphicDialog);
                 }
                 paintPending.set(false);
