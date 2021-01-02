@@ -41,7 +41,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
 							<!--       set your ComponentSource class name here! -->
-                            <mainClass>de.neemann.digital.plugin.NALibComponentSource</mainClass>
+                            <mainClass>de.neemann.digital.plugin.NALibSource</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
