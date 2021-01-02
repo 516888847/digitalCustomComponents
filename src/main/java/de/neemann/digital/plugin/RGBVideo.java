@@ -65,8 +65,8 @@ public class RGBVideo extends Node implements Element {
      * @param attr the attributes
      */
     public RGBVideo(ElementAttributes attr) {
-        SizeH = Math.min(attr.get(Keys.GRAPHIC_WIDTH),4096);
-        SizeW = Math.min(attr.get(Keys.GRAPHIC_HEIGHT),4096);
+        SizeH = Math.max(1,Math.min(attr.get(Keys.GRAPHIC_WIDTH),4096));
+        SizeW = Math.max(1,Math.min(attr.get(Keys.GRAPHIC_HEIGHT),4096));
         SizeScale = Math.max(1,Math.min(attr.get(KEY_SIZESCALE),32));
         label = attr.getLabel();
         image = new BufferedImage(SizeW, SizeH, BufferedImage.TYPE_INT_RGB);

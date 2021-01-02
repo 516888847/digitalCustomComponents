@@ -10,7 +10,7 @@ import de.neemann.digital.gui.Main;
 /**
  * Adds some components to Digital
  */
-public class DemoComponentSource implements ComponentSource {
+public class NALibComponentSource implements ComponentSource {
 
     /**
      * Attach your components to the simulator by calling the add methods
@@ -21,6 +21,7 @@ public class DemoComponentSource implements ComponentSource {
     @Override
     public void registerComponents(ComponentManager manager) throws InvalidNodeException {
 
+        /*
         // add a component and use the default shape
         manager.addComponent("my folder/my sub folder", MyAnd.DESCRIPTION);
 
@@ -35,11 +36,11 @@ public class DemoComponentSource implements ComponentSource {
                 (attr, inputs, outputs) ->
                         new GenericShape("RAM", inputs, outputs, attr.getLabel(), true, 5));
         
+        */
 
-        // add a component and use the default shape
-        manager.addComponent("my folder/RAM", RectLedMatrix.DESCRIPTION);
-        // add a component and use the default shape
-        manager.addComponent("my folder/RAM", RGBVideo.DESCRIPTION);
+        manager.addComponent("NALib/IO", RectLedMatrix.DESCRIPTION);
+
+        manager.addComponent("NALib/IO", RGBVideo.DESCRIPTION);
     }
 
     /**
@@ -50,7 +51,7 @@ public class DemoComponentSource implements ComponentSource {
      */
     public static void main(String[] args) {
         new Main.MainBuilder()
-                .setLibrary(new ElementLibrary().registerComponentSource(new DemoComponentSource()))
+                .setLibrary(new ElementLibrary().registerComponentSource(new NALibComponentSource()))
                 .openLater();
     }
 }
