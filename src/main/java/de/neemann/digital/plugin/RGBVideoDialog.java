@@ -29,7 +29,7 @@ public class RGBVideoDialog extends JDialog {
         super(parent, title, ModalityType.MODELESS);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        iSize = new Dimension(image.getWidth()*SizeScale,image.getHeight()*SizeScale);
+        iSize = new Dimension(image.getWidth()*SizeScale+15,image.getHeight()*SizeScale+38);
 
         graphicComponent = new MyComponent(image,SizeScale);
         getContentPane().add(graphicComponent);

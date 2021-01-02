@@ -16,7 +16,6 @@ import de.neemann.digital.lang.Lang;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -27,8 +26,8 @@ import static de.neemann.digital.core.element.PinInfo.input;
  */
 public class RGBVideo extends Node implements Element {
 
-    private static final Key.KeyInteger KEY_SIZESCALE = new Key.KeyInteger("GraphicScale", 1).setMin(1).setMax(32);
-    
+    static final Key<Integer> KEY_SIZESCALE = new Key.KeyInteger("GraphicScale", 1).setMin(1).setMax(32);
+
     public static final ElementTypeDescription DESCRIPTION
             = new ElementTypeDescription(RGBVideo.class,
             input("X"),
