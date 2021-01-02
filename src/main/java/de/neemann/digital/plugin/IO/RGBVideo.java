@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2019 Helmut Neemann.
- * Use of this source code is governed by the GPL v3 license
- * that can be found in the LICENSE file.
- */
 package de.neemann.digital.plugin;
 
 import de.neemann.digital.core.*;
@@ -21,9 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.neemann.digital.core.element.PinInfo.input;
 
-/**
- * Analyzes RGBVideo signals
- */
+
 public class RGBVideo extends Node implements Element {
 
     static final Key<Integer> KEY_SIZESCALE = new Key.KeyInteger("GraphicScale", 1).setMin(1).setMax(32);
@@ -58,11 +51,6 @@ public class RGBVideo extends Node implements Element {
     private int SizeH;
     private int SizeScale;
 
-    /**
-     * Creates a new instance
-     *
-     * @param attr the attributes
-     */
     public RGBVideo(ElementAttributes attr) {
         SizeH = Math.max(1,Math.min(attr.get(Keys.GRAPHIC_WIDTH),4096));
         SizeW = Math.max(1,Math.min(attr.get(Keys.GRAPHIC_HEIGHT),4096));

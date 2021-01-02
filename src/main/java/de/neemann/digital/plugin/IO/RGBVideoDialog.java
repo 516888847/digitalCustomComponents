@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2016 Helmut Neemann
- * Use of this source code is governed by the GPL v3 license
- * that can be found in the LICENSE file.
- */
 package de.neemann.digital.plugin;
 
 import de.neemann.digital.gui.components.graphics.MoveFocusTo;
@@ -11,19 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * The dialog used to show the RGBVideo screen
- */
+
 public class RGBVideoDialog extends JDialog {
     private final MyComponent graphicComponent;
 
-    /**
-     * Creates a new instance of the given size
-     *
-     * @param parent the parent window
-     * @param title  the window title
-     * @param image  the image data
-     */
     private Dimension iSize;
     public RGBVideoDialog(Window parent, String title, BufferedImage image, int SizeScale) {
         super(parent, title, ModalityType.MODELESS);
@@ -41,9 +27,6 @@ public class RGBVideoDialog extends JDialog {
         addWindowFocusListener(new MoveFocusTo(parent));
     }
 
-    /**
-     * Updates the graphics data
-     */
     public void updateGraphic() {
         setSize(iSize);
         graphicComponent.repaint();
