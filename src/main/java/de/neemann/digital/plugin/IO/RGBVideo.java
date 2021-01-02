@@ -61,8 +61,8 @@ public class RGBVideo extends Node implements Element {
 
     @Override
     public void setInputs(ObservableValues inputs) throws NodeException {
-        InputXCoord = inputs.get(0);
-        InputYCoord = inputs.get(1);
+        InputXCoord = inputs.get(0).addObserverToValue(this);
+        InputYCoord = inputs.get(1).addObserverToValue(this);
         InputWriteEnable = inputs.get(2).checkBits(1, this ,2).addObserverToValue(this);
         InputRGB = inputs.get(3).checkBits(24,this,3).addObserverToValue(this);
         InputClock = inputs.get(4).checkBits(1, this, 4).addObserverToValue(this);
