@@ -14,8 +14,8 @@ import static de.neemann.digital.core.element.PinInfo.input;
 
 public class HighZStat extends Node implements Element {
 
-    public static final Key<Boolean> USENOTOUT = new Key<>("UseNotOutput", false);
-    public static final Key<Boolean> NOACTIVEOUT = new Key<>("NoActiveOut", false);
+    public static final Key<Boolean> USENOTOUT = new Key<>("UseNotOutput", false).setName("Use not output");
+    public static final Key<Boolean> NOACTIVEOUT = new Key<>("NoActiveOut", false).setName("No active out");
 
     public static final ElementTypeDescription DESCRIPTION
             = new ElementTypeDescription(
