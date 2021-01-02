@@ -26,7 +26,7 @@ import static de.neemann.digital.draw.shapes.GenericShape.SIZE2;
 public class RGBVideoShape implements Shape {
 
     private final PinDescriptions inputs;
-    private final Dimension ImageSize;
+    //private final Dimension ImageSize;
     private final int ImageSizeScale;
     private BufferedImage image;
 
