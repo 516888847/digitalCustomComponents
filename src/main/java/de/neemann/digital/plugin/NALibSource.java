@@ -20,10 +20,10 @@ public class NALibSource implements ComponentSource {
      */
     @Override
     public void registerComponents(ComponentManager manager) throws InvalidNodeException {
-        manager.addComponent("my folder/my sub folder", MyAnd.DESCRIPTION);
+
         /*
         // add a component and use the default shape
-        
+        manager.addComponent("my folder/my sub folder", MyAnd.DESCRIPTION);
 
         // add a component and also provide a custom shape
         manager.addComponent("my folder/my sub folder", MyOr.DESCRIPTION, MyOrShape::new);
