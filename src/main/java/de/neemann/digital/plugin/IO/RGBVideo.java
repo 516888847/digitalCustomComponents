@@ -19,7 +19,7 @@ import static de.neemann.digital.core.element.PinInfo.input;
 
 public class RGBVideo extends Node implements Element {
 
-    static final Key<Integer> KEY_SIZESCALE = new Key.KeyInteger("GraphicScale", 1).setMin(1).setMax(32);
+    static final Key<Integer> KEY_SIZESCALE = new Key.KeyInteger("SizeScale", 1).setMin(1).setMax(32).setName("SizeScale");
 
     public static final ElementTypeDescription DESCRIPTION
             = new ElementTypeDescription(RGBVideo.class,
