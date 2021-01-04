@@ -41,7 +41,6 @@ public class NALibSource implements ComponentSource {
 
         manager.addComponent("NALib/IO", RGBVideo.DESCRIPTION);
 
-        manager.addComponent("NALib/Misc",HighZStat.DESCRIPTION);
     }
 
     /**
